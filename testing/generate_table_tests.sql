@@ -5,7 +5,7 @@ CREATE TYPE tests.t_test AS (
 );
 
 CREATE OR REPLACE FUNCTION tests.generate_table_tests(p_schema name)
-RETURNS SET OF tests.t_test LANGUAGE plpgsql AS $$
+RETURNS SETOF tests.t_test LANGUAGE plpgsql AS $$
 DECLARE
   v_script text;
   v_table_name name;
