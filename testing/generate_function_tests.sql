@@ -51,6 +51,6 @@ BEGIN
     v_test.test_schema := p_schema::TEXT;
     v_test.test_name   := 'test_' || p_schema || '_functions';
     v_test.the_test    := v_script;
-    RETURN v_test;
+    RETURN NEXT v_test;
 END;
 $$;
