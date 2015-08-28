@@ -5,17 +5,18 @@ CREATE TYPE tests.t_test AS (
 );
 
 CREATE OR REPLACE FUNCTION tests.generate_function_tests(p_schema name)
-RETURNS TEXT LANGUAGE plpgsql AS $$
+RETURNS SETOF tests.t_test LANGUAGE plpgsql AS $$
 DECLARE
   v_script text;
   v_function_oid oid;
   v_function_name name;
   v_function_argtypes text;
   v_function_id text;
+  v_test tests.t_test;
 BEGIN
     v_script := '';
     -- Single function to check that schema functions exist
-    v_script := v_script || 'CREATE OR REPLACE FUNCTION tests.' || quote_ident('test_' || p_schema || '_functions') || E'()\n';
+    v_script := v_script || 'CREATE OR REPLACE FUNCTION ' || quote_ident(p_schema) || '.' || quote_ident('test_' || p_schema || '_functions') || E'()\n';
     v_script := v_script || E'RETURNS SETOF TEXT LANGUAGE plpgsql AS \$\$\n';
     v_script := v_script || E'BEGIN\n';
     -- Loop through all functions
@@ -46,6 +47,10 @@ BEGIN
     -- End function
     v_script := v_script || E'END;\n';
     v_script := v_script || E'\$\$;\n\n';
-    RETURN v_script;
+    -- return
+    v_test.test_schema := p_schema::TEXT;
+    v_test.test_name   := 'test_' || p_schema || '_functions';
+    v_test.the_test    := v_script;
+    RETURN v_test;
 END;
 $$;
