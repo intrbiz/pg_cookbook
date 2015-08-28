@@ -6,6 +6,6 @@ This is my collection of handy and neat PostgreSQL snippets.
 
 ### Testing
 
- * [testing/generate_table_tests.sql](Generating Table pgtap Tests)
- * [testing/generate_function_tests.sql](Generating Function pgtap Tests)
+ * [Generating Table pgtap Tests](testing/generate_table_tests.sql)
+ * [Generating Function pgtap Tests](testing/generate_function_tests.sql)
 
